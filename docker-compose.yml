@@ -1,0 +1,60 @@
+version: "3.5"
+
+services:
+    app:
+        build:
+            context: ./.docker/image/ubuntu2004-php80
+        command: bash -c "chmod -R 777 /app/var && make run"
+        volumes:
+            - ./:/app:delegated
+        env_file:
+            - .env
+        hostname: "recruitment.localhost"
+        labels:
+            - "traefik.enable=true"
+            - "traefik.port=80"
+            - "traefik.frontend.rule=HostRegexp::recruitment.localhost"
+        networks:
+            recruitment:
+                ipv4_address: 172.19.0.4
+        depends_on:
+            - proxy
+            - mysql
+
+    proxy:
+        image: traefik:1.7-alpine
+        command: --api --docker
+        ports:
+            - "80:80"
+            - "8080:8080"
+        volumes:
+            - /var/run/docker.sock:/var/run/docker.sock:ro
+            - ./.docker/traefik/traefik.toml:/traefik.toml
+        networks:
+            recruitment:
+                ipv4_address: 172.19.0.2
+
+    mysql:
+        image: mysql:5.7
+        platform: linux/x86_64
+        environment:
+            MYSQL_ROOT_PASSWORD: admin1
+        volumes:
+            - ./.docker/mysql/mysqld.cnf:/etc/mysql/mysql.conf.d/mysqld.cnf:delegated
+            - ./.docker/mysql/init:/docker-entrypoint-initdb.d:delegated
+        ports:
+            - "3306:3306"
+        depends_on:
+            - proxy
+        networks:
+            recruitment:
+                ipv4_address: 172.19.0.3
+
+networks:
+    recruitment:
+        name: recruitment-junior-php
+        driver: bridge
+        ipam:
+            driver: default
+            config:
+                - subnet: 172.19.0.0/16
