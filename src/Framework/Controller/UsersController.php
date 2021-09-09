@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace RecruitmentApp\Framework\Controller;
 
-use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use RecruitmentApp\Domain\Email;
 use RecruitmentApp\Domain\User;

@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Tests\Domain;
+namespace Tests\Unit\Domain;
 
 use PHPUnit\Framework\TestCase;
 use RecruitmentApp\Domain\Email;
