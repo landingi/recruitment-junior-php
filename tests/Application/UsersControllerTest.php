@@ -20,8 +20,8 @@ class UsersControllerTest extends WebTestCase
         $this->client->request(
             method: 'POST',
             uri: '/users',
+            parameters: ['email' => 'email@domain.com'],
             server: [],
-            content: json_encode(['email' => 'email@domain.com'], JSON_THROW_ON_ERROR),
         );
         self::assertResponseIsSuccessful();
     }

@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace RecruitmentApp\Framework\Controller;
 
-use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use RecruitmentApp\Domain\Email;
 use RecruitmentApp\Domain\User;
@@ -24,11 +23,9 @@ class UsersController
     #[Route(path: '/users', name: 'index', methods: ['POST'])]
     public function create(Request $request): JsonResponse
     {
-        $data = json_decode($request->getContent(), true);
-
         $this->entityManager->persist(
             $user = new User(
-                new Email($data['email']),
+                new Email($request->get('email')),
                 ApiKey::generate()
             )
         );
