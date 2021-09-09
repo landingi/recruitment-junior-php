@@ -24,9 +24,11 @@ class UsersController
     #[Route(path: '/users', name: 'index', methods: ['POST'])]
     public function create(Request $request): JsonResponse
     {
+        $data = json_decode($request->getContent(), true);
+
         $this->entityManager->persist(
             $user = new User(
-                new Email($request->get('email')),
+                new Email($data['email']),
                 ApiKey::generate()
             )
         );

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- https://phpunit.readthedocs.io/en/latest/configuration.html -->
 <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.3/phpunit.xsd"
+         xsi:noNamespaceSchemaLocation="vendor/phpunit/phpunit/phpunit.xsd"
          backupGlobals="false"
          colors="true"
          bootstrap="tests/bootstrap.php"
@@ -25,13 +25,10 @@
             <directory>tests/</directory>
         </testsuite>
         <testsuite name="unit">
-            <directory>tests/*/Unit/</directory>
+            <directory>tests/Unit/</directory>
         </testsuite>
-        <testsuite name="integration">
-            <directory>tests/*/Integration/</directory>
-        </testsuite>
-        <testsuite name="functional">
-            <directory>tests/*/Functional/</directory>
+        <testsuite name="application">
+            <directory>tests/Application/</directory>
         </testsuite>
     </testsuites>
 
