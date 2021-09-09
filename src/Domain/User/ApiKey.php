@@ -3,13 +3,20 @@ declare(strict_types=1);
 
 namespace RecruitmentApp\Domain\User;
 
+use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Uid\Uuid;
 
+/**
+ * @ORM\Embeddable
+ */
 class ApiKey
 {
+    /**
+     * @ORM\Column(type = "string", name="api_key")
+     */
     private string $key;
 
-    public static function generate(): ApiKey
+    public static function generate(): self
     {
         return new self((string) Uuid::v4());
     }
